@@ -1,3 +1,3 @@
 # custom-analyzer-solhint
 
-Custom analyzer for DeepSource.
+Custom analyzer `custom-solhint` for DeepSource.

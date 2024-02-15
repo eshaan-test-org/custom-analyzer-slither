@@ -1,0 +1,31 @@
+# A Github Actions config to run Solhint and report the artifact to DeepSource
+name: Custom Solhint Analysis
+
+on:
+  # Note that both `push` and `pull_request` triggers should be present for GitHub to consistently present solhint
+  # SARIF reports.
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Upload SARIF report files to DeepSource
+        id: upload-sarif
+        run: |
+          # Install the CLI
+          curl https://deepsource.io/cli | sh
+
+          # Send the report to DeepSource
+          ./bin/deepsource report --analyzer custom-solhint --analyzer-type custom --value-file custom-solhint.sarif

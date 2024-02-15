@@ -1,0 +1,6 @@
+# Analyzer Profile
+category = "lang"
+name = "Custom Solhint"
+shortcode = "custom-solhint"
+status = "active"
+description = "Eshaan's custom Solhint for custom analyzer."
